@@ -1,0 +1,49 @@
+// Ankur Store Inspired Product Catalog (React + Tailwind)
+
+import { useState } from "react";
+import { Card, CardContent } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+
+const products = [
+  { id: 1, name: "Organic Mustard Oil", price: 220, description: "Cold-pressed mustard oil.", image: "https://www.ankur.store/cdn/shop/files/oil.jpg?v=1712046250&width=600", category: "Oil" },
+  { id: 2, name: "Brown Rice (Atop Chaal)", price: 160, description: "Freshly milled atop rice.", image: "https://www.ankur.store/cdn/shop/files/rice.jpg?v=1712046250&width=600", category: "Rice" },
+  { id: 3, name: "Red Lentil (Masoor Dal)", price: 120, description: "Premium red lentils.", image: "https://www.ankur.store/cdn/shop/files/dal.jpg?v=1712046250&width=600", category: "Lentil" },
+  { id: 4, name: "Ghee (Clarified Butter)", price: 500, description: "Pure cow ghee.", image: "https://www.ankur.store/cdn/shop/files/ghee.jpg?v=1712046250&width=600", category: "Dairy" },
+];
+
+export default function ProductCatalog() {
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const filteredProducts = products.filter((p) =>
+    p.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  return (
+    <div className="p-4 max-w-6xl mx-auto">
+      <h1 className="text-3xl font-bold text-center mb-6 text-green-700">🌱 Ankur Style Product Catalog</h1>
+
+      <div className="flex justify-center mb-6">
+        <Input
+          type="text"
+          placeholder="Search for products..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          className="w-full max-w-md"
+        />
+      </div>
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+        {filteredProducts.map((product) => (
+          <Card key={product.id} className="rounded-2xl shadow hover:shadow-lg transition">
+            <CardContent className="p-4">
+              <img src={product.image} alt={product.name} className="w-full h-48 object-cover rounded-xl mb-3" />
+              <h2 className="text-lg font-bold text-gray-800">{product.name}</h2>
+              <p className="text-sm text-gray-600 mb-2">{product.description}</p>
+              <p className="text-green-600 font-semibold text-md">৳{product.price}</p>
+            </CardContent>
+          </Card>
+        ))}
+      </div>
+    </div>
+  );
+}
